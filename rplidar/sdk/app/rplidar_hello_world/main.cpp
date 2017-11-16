@@ -24,6 +24,10 @@
  *
  */
 
+/* Birkan Kolcu
+  This program collects 20 batches of scan data and prints each one of batch's total data point with timestamp at
+  the end of scanning.
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>       /* time_t, time (for timestamp in second) */
