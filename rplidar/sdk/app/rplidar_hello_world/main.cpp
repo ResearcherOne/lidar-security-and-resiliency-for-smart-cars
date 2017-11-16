@@ -26,7 +26,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <chrono> //I included this library myself.
+#include <time.h>       /* time_t, time (for timestamp in second) */
+#include <sys/timeb.h>  /* ftime, timeb (for timestamp in millisecond) */
+#include <sys/time.h>   /* gettimeofday, timeval (for timestamp in microsecond) */
 
 #include "rplidar.h" //RPLIDAR standard sdk, all-in-one header
 
@@ -168,7 +170,7 @@ int main(int argc, const char * argv[]) {
         size_t   count = _countof(nodes);
 		    printf("Count: %d",(int)count);
         op_result = drv->grabScanData(nodes, count);
-		
+        
         if (IS_OK(op_result)) {
             drv->ascendScanData(nodes, count);
 			int b_current_data_point_count = 0;
@@ -185,15 +187,20 @@ int main(int argc, const char * argv[]) {
         }
 		
 		if (b_i == (B_ARRAY_LENGTH)) {
-			for (int i = 0; i < B_ARRAY_LENGTH; i++)
+        /* Example of timestamp in millisecond. */
+        struct timeb timer_msec;
+        long long int timestamp_msec; /* timestamp in millisecond. */
+        if (!ftime(&timer_msec)) {
+        	timestamp_msec = ((long long int) timer_msec.time) * 1000ll + 
+        						(long long int) timer_msec.millitm;
+        } else {
+        	timestamp_msec = -1;
+        }
+        printf("%lld milliseconds since epoch\n", timestamp_msec);
+        /* Example of timestamp in millisecond. */
+			for (int i = 0; i < B_ARRAY_LENGTH; i++) {
 				printf("[%d] %d \n", i, b_batch_data_point_count[i]);
-        
-			using namespace std::chrono;
-			milliseconds ms = duration_cast< milliseconds >(
-				system_clock::now().time_since_epoch()
-			);
-			unsigned int milisec = ms.count();
-			printf("milisec: %d",milisec);
+      }
 			break;
       
 		}
