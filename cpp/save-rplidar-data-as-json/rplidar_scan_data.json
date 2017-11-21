@@ -1,0 +1,200 @@
+{
+	"lidar_one" : 
+	[
+		{
+			"batch_timestamp" : 123123123,
+			"scan_values" : 
+			[
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				}
+			]
+		},
+		{
+			"batch_timestamp" : 123123123,
+			"scan_values" : 
+			[
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				}
+			]
+		},
+		{
+			"batch_timestamp" : 123123123,
+			"scan_values" : 
+			[
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				}
+			]
+		}
+	],
+	"lidar_three" : 
+	[
+		{
+			"batch_timestamp" : 123123123,
+			"scan_values" : 
+			[
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				}
+			]
+		},
+		{
+			"batch_timestamp" : 123123123,
+			"scan_values" : 
+			[
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				}
+			]
+		},
+		{
+			"batch_timestamp" : 123123123,
+			"scan_values" : 
+			[
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				}
+			]
+		}
+	],
+	"lidar_two" : 
+	[
+		{
+			"batch_timestamp" : 123123123,
+			"scan_values" : 
+			[
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				}
+			]
+		},
+		{
+			"batch_timestamp" : 123123123,
+			"scan_values" : 
+			[
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				}
+			]
+		},
+		{
+			"batch_timestamp" : 123123123,
+			"scan_values" : 
+			[
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				},
+				{
+					"distance" : 5,
+					"thetha" : 123,
+					"timestamp" : 123123123
+				}
+			]
+		}
+	]
+}
