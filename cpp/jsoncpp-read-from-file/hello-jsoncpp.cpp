@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    ifstream ifs("alice.json");
+    ifstream ifs("json-out.json");
     Json::Reader reader;
     Json::Value obj;
     reader.parse(ifs, obj); // reader can also read strings

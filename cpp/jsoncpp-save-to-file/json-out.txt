@@ -1,0 +1,9 @@
+{
+	"array" : [ "hello", "world" ],
+	"hello" : "world",
+	"number" : 2,
+	"object" : 
+	{
+		"hello" : "world"
+	}
+}

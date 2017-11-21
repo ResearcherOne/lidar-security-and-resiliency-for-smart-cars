@@ -4,6 +4,7 @@
 #include <jsoncpp/json/value.h>
 #include <jsoncpp/json/writer.h>
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -31,9 +32,25 @@ int main(int argc, char** argv) {
     fromScratch["array"] = array;
     fromScratch["object"]["hello"] = "world";
 
+
+    
     output(fromScratch);
 
 
+    Json::FastWriter fast;
+    Json::StyledWriter styled;
+    string sFast = fast.write(fromScratch);
+    string sStyled = styled.write(fromScratch);
+    cout << "Fast:\n" << sFast << "Styled:\n" << sStyled;
+    cout << "Styled stream:\n";
+    Json::StyledStreamWriter styledStream;
+    styledStream.write(cout, fromScratch);
+
+    ofstream myfile;
+    myfile.open ("json-out.json");
+    styledStream.write(myfile, fromScratch);
+    myfile.close();
+    
     return 1;
 }
 
