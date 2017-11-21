@@ -29,6 +29,11 @@
 
 #include "rplidar.h" //RPLIDAR standard sdk, all-in-one header
 
+//Additional libs.
+#include <time.h>       /* time_t, time (for timestamp in second) */
+#include <sys/timeb.h>  /* ftime, timeb (for timestamp in millisecond) */
+//Additional libs.
+
 #ifndef _countof
 #define _countof(_Array) (int)(sizeof(_Array) / sizeof(_Array[0]))
 #endif
@@ -163,7 +168,17 @@ int main(int argc, const char * argv[]) {
         rplidar_response_measurement_node_t nodes[360*2];
         size_t   count = _countof(nodes);
         op_result = drv->grabScanData(nodes, count);
-
+        //Get timestamp here.
+        struct timeb timer_msec;
+        long long int timestamp_msec; /* timestamp in millisecond. */
+        if (!ftime(&timer_msec)) {
+        	timestamp_msec = ((long long int) timer_msec.time) * 1000ll + 
+        						(long long int) timer_msec.millitm;
+        } else {
+        	timestamp_msec = -1;
+        }
+        //Get timestamp here.
+        printf("%lld milliseconds since epoch\n", timestamp_msec); //Print timestamp
         if (IS_OK(op_result)) {
             drv->ascendScanData(nodes, count);
             for (int pos = 0; pos < (int)count ; ++pos) {
@@ -176,8 +191,8 @@ int main(int argc, const char * argv[]) {
         }
 
         if (ctrl_c_pressed){ 
-			break;
-		}
+    			break;
+    		}
     }
 
     drv->stop();
