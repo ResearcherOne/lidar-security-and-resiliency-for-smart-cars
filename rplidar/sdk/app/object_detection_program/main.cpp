@@ -6,10 +6,11 @@ using namespace std;
 //Compiling the example on Ubuntu: g++ main.cpp -o main.o rplidar_module.h rplidar_module.cpp
 int main()
 {
-	int tag_number = 1;
-	cout <<"This program will create rplidar_module with tag number "<<tag_number<<" using constructor of rplidar_module class \n";
+	int lidar_ID = 5;
+	cout <<"This program will create rplidar_module with ID "<<lidar_ID<<" \n";
 	
-	RplidarModule stanley(tag_number);
-	stanley.bark();
+	RplidarModule lidar;
+	lidar.initializeSystem(lidar_ID);
+	lidar.startSystem();
 	return 0;
 }

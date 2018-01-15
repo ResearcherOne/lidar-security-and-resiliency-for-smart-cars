@@ -4,12 +4,24 @@
 using namespace std;
 
 
-RplidarModule::RplidarModule(int tag_no)
+bool RplidarModule::initializeSystem(int lidar_no)
 {
-	tag_number = tag_no;
+	bool isInitialized = false;
+	lidar_ID = lidar_no;
+	return isInitialized;
 }
 
-void RplidarModule::bark()
+void RplidarModule::startSystem()
 {
-	cout << "RplidarModule "<< tag_number <<": Get the hell out of my zone you little human!! \n";
+	cout << "RplidarModule "<< lidar_ID <<": starting the system! \n";
+}
+
+void RplidarModule::stopSystem()
+{
+	cout << "RplidarModule "<< lidar_ID <<": stopping the system!! \n";
+}
+
+void RplidarModule::grabBatchScanData()
+{
+	cout << "RplidarModule "<< lidar_ID <<": grabbing batch scan data. \n";
 }

@@ -4,11 +4,12 @@
 class RplidarModule
 {
 	private:
-		int tag_number;
+		int lidar_ID;
 	public:
-		RplidarModule(int);
-		void bark();
-
+		bool initializeSystem(int);
+		void startSystem();
+		void stopSystem();
+		void grabBatchScanData(); //Create LIDAR_DATA_STRUCTURES.h Creating my own header will let me use other LIDAR with minimal change to my code.
 };
 
 #endif
