@@ -22,8 +22,9 @@ MODULE_NAME := $(notdir $(CURDIR))
 
 include $(HOME_TREE)/mak_def.inc
 
-CXXSRC += main.cpp
+CXXSRC += main.cpp rplidar_module.cpp rplidar_module.h
 C_INCLUDES += -I$(CURDIR)/../../sdk/include
+CXX_INCLUDES += -I$(CURDIR)
 
 EXTRA_OBJ := 
 LD_LIBS += -lstdc++ -lpthread

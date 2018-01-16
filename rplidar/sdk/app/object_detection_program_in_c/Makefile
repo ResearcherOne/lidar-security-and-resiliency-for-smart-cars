@@ -16,16 +16,21 @@
 # *
 # */
 #
-HOME_TREE := ../
+HOME_TREE := ../../
 
-#MAKE_TARGETS := object_detection_program simple_grabber ultra_simple scan-and-timestamp scan-and-save 
-#MAKE_TARGETS := object_detection_program
-MAKE_TARGETS := rplidar_prog_with_c_classes
+MODULE_NAME := $(notdir $(CURDIR))
 
 include $(HOME_TREE)/mak_def.inc
 
-all: make_subs
+CXXSRC += main.cpp rplidar_module.cpp rplidar_module.h
+C_INCLUDES += -I$(CURDIR)/../../sdk/include
+CXX_INCLUDES += -I$(CURDIR)
+
+EXTRA_OBJ := 
+LD_LIBS += -lstdc++ -lpthread
+
+all: build_app
 
 include $(HOME_TREE)/mak_common.inc
 
-clean: make_subs
+clean: clean_app
