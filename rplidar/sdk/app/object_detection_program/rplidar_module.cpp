@@ -147,7 +147,7 @@ void convert_rplidar_batch_scan_to_standard_LIDAR_batch_form(rplidar_response_me
     LIDAR_batch_scan->scanned_data_count = scan_point_count;
     for (int pos = 0; pos < scan_point_count; ++pos) {
         (LIDAR_batch_scan->LIDAR_data_point_array)[pos].thetha = ((rplidar_batch_scan_data[pos]).angle_q6_checkbit >> RPLIDAR_RESP_MEASUREMENT_ANGLE_SHIFT)/64.0f;
-        (LIDAR_batch_scan->LIDAR_data_point_array)[pos].distance = rplidar_batch_scan_data[pos].distance_q2/4.0f;
+        (LIDAR_batch_scan->LIDAR_data_point_array)[pos].distance = (rplidar_batch_scan_data[pos].distance_q2/4.0f)/10; //divided by 10 in order to convert mm to cm.
         (LIDAR_batch_scan->LIDAR_data_point_array)[pos].measurement_quality = rplidar_batch_scan_data[pos].sync_quality >> RPLIDAR_RESP_MEASUREMENT_QUALITY_SHIFT;
     }
 }

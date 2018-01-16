@@ -1,28 +1,29 @@
 #ifndef LIDAR_DATA_STRUCTURES_H
 #define LIDAR_DATA_STRUCTURES_H
 
+/*
 enum LIDAR_Directions
 {
-	North, //North is assumed to be where LIDAR is heading by default.
+	front,		//316-45
 	NorthEast,
-	East,
+	rightward,
 	SouthEast,
-	South,
+	backward,
 	SouthWest,
-	West,
-	NorthWest
+	leftward,
 };
+*/
 
 enum LIDAR_Zones
 {
-	first_zone,		//NNE -> North, NorthEast
-	second_zone, 	//ENE -> East, NorthEast
-	third_zone,		//ESE -> East, SouthEast
-	fourth_zone,	//SSE -> South, SourthEast
-	fifth_zone,		//SSW
-	sixth_zone,		//WSW
-	seventh_zone,	//WNW
-	eight_zone		//NNW
+	eight_zone,		//315-360 front
+	first_zone,		//0-45 front
+	second_zone, 	//45-90 rightward
+	third_zone,		//90-135 rightward
+	fourth_zone,	//135-180 backward
+	fifth_zone,		//180-225 backward
+	sixth_zone,		//225-270 leftward
+	seventh_zone	//270-315 leftward
 };
 
 struct LIDAR_data_point
@@ -39,5 +40,8 @@ struct LIDAR_batch_scan_data
 	int lidar_ID;
 	LIDAR_data_point LIDAR_data_point_array[720]; //dirt workaround is having set size of the array. I have to initialize that in my program. Change this.
 };
+
+LIDAR_Zones lidar_data_structures_getPointZone(LIDAR_data_point point);
+void lidar_data_structures_printLidarPoint(LIDAR_data_point point);
 
 #endif

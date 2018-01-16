@@ -6,11 +6,6 @@
 #include <iostream>
 #include <algorithm>
 
-void printLidarPoint(LIDAR_data_point point)
-{
-	printf("Point thetha %f, Point Distance %f, Quality of Measurement %d \n", point.thetha, point.distance, point.measurement_quality);
-}
-
 void ObjectDetectionModule::clearDataPointArrayFromUnqualifiedPoints(LIDAR_data_point LIDAR_data_point_array[], int size_of_array, LIDAR_data_point result_point_array[], int * result_data_point_count, int quality_threshold)
 {
 	int number_of_clean_data_points = 0;
@@ -65,9 +60,4 @@ void ObjectDetectionModule::getClosestPointSet(LIDAR_data_point point_array[], i
 		result_point_array[i].distance = cleared_point_array[i].distance;
 		result_point_array[i].measurement_quality = cleared_point_array[i].measurement_quality;
 	}
-}
-
-LIDAR_Zones ObjectDetectionModule::getPointZone()
-{
-	return first_zone;
 }

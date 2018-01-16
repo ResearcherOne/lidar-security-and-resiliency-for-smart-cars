@@ -21,6 +21,30 @@ void sleepForMs(unsigned int milliseconds)
 	usleep(milliseconds*1000);
 }
 
+void applyObjectDetectionRules(LIDAR_data_point resultPoint) {
+	//printf("Point thetha %f, Point Distance cm %f, Quality of Measurement %d \n", resultPoint.thetha, resultPoint.distance, resultPoint.measurement_quality);
+	float max_detection_range_in_cm = 40;
+
+	float point_thetha = resultPoint.thetha;
+	float point_distance = resultPoint.distance;
+	if(point_distance < max_detection_range_in_cm) {
+		printf("An object is detected! %f at degrees, %f cm \n", point_thetha, point_distance);
+		LIDAR_Zones detected_zone = lidar_data_structures_getPointZone(resultPoint);
+		if(detected_zone == first_zone || detected_zone == eight_zone) {
+			printf("The object is at the front zone! \n");
+		} else if (detected_zone == second_zone || detected_zone == third_zone) {
+			printf("The object is at the right zone! \n");
+		} else if (detected_zone == fourth_zone || detected_zone == fifth_zone) {
+			printf("The object is at the back zone! \n");
+		} else {
+			printf("The object is at the left zone! \n");
+		}
+	} else {
+		printf("No object is in detection range! \n");
+	}
+	
+}
+
 int main()
 {
 	int lidar_ID = 8;
@@ -44,7 +68,8 @@ int main()
 
 		ObjectDetectionModule *object_detection_module = new ObjectDetectionModule();
 		object_detection_module->getClosestPoint(lidar_batch_scan_data.LIDAR_data_point_array, lidar_batch_scan_data.scanned_data_count, &resultPoint, quality_threshold);
-		printf("Point thetha %f, Point Distance %f, Quality of Measurement %d \n", resultPoint.thetha, resultPoint.distance, resultPoint.measurement_quality);
+	
+		applyObjectDetectionRules(resultPoint);
 	}
 
 
