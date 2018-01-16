@@ -28,16 +28,16 @@ void applyObjectDetectionRules(LIDAR_data_point resultPoint) {
 	float point_thetha = resultPoint.thetha;
 	float point_distance = resultPoint.distance;
 	if(point_distance < max_detection_range_in_cm) {
-		printf("An object is detected! %f at degrees, %f cm \n", point_thetha, point_distance);
+		//printf("An object is detected! %f at degrees, %f cm \n", point_thetha, point_distance);
 		LIDAR_Zones detected_zone = lidar_data_structures_getPointZone(resultPoint);
 		if(detected_zone == first_zone || detected_zone == eight_zone) {
-			printf("The object is at the front zone! \n");
+			printf("The object is at the front zone! It is %f cm far at %f degrees. \n", point_distance, point_thetha);
 		} else if (detected_zone == second_zone || detected_zone == third_zone) {
-			printf("The object is at the right zone! \n");
+			printf("The object is at the right zone! It is %f cm far at %f degrees. \n", point_distance, point_thetha);
 		} else if (detected_zone == fourth_zone || detected_zone == fifth_zone) {
-			printf("The object is at the back zone! \n");
+			printf("The object is at the back zone! It is %f cm far at %f degrees. \n", point_distance, point_thetha);
 		} else {
-			printf("The object is at the left zone! \n");
+			printf("The object is at the left zone! It is %f cm far at %f degrees. \n", point_distance, point_thetha);
 		}
 	} else {
 		printf("No object is in detection range! \n");
