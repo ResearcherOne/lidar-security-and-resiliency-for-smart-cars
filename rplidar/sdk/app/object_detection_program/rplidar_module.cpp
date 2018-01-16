@@ -1,6 +1,6 @@
 #include <iostream>
 #include "rplidar_module.hpp"
-
+#include "LIDAR_data_structures.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -95,17 +95,6 @@ bool rplidar_hardware_initialization(RPlidarDriver * drv)
 		#endif
     }
 
-/*
-    // create the driver instance
-    drv = RPlidarDriver::CreateDriver(RPlidarDriver::DRIVER_TYPE_SERIALPORT);
-    
-    if (!drv) {
-        fprintf(stderr, "insufficent memory, exit\n");
-        is_initialization_succeed = false;
-        return is_initialization_succeed;
-    }
-*/
-
     // make connection...
     if (IS_FAIL(drv->connect(opt_com_path, opt_com_baudrate))) {
         fprintf(stderr, "Error, cannot bind to the specified serial port %s.\n"
@@ -153,26 +142,39 @@ bool rplidar_hardware_initialization(RPlidarDriver * drv)
     return is_initialization_succeed;
 }
 
-void rplidar_grab_batch_scan_data(RPlidarDriver * drv)
+void rplidar_batch_scan_to_standard_LIDAR_batch_form(rplidar_response_measurement_node_t rplidar_batch_scan_data, LIDAR_batch_scan_data * LIDAR_batch_scan, int scan_point_count)
+{
+
+}
+
+void rplidar_grab_batch_scan_data(RPlidarDriver * drv, rplidar_response_measurement_node_t nodes[], size_t rplidar_scan_node_capacity, size_t * rplidar_scanned_node_count) //change "count" as "rplidar_scan_node_capacity"
 {
     u_result     op_result;
 
-	rplidar_response_measurement_node_t nodes[360*2];
-    size_t   count = _countof(nodes);
-    op_result = drv->grabScanData(nodes, count);
+    *rplidar_scanned_node_count = rplidar_scan_node_capacity;
+    op_result = drv->grabScanData(nodes, *rplidar_scanned_node_count); //count is set to actual data count scanned.
 
     if (IS_OK(op_result)) {
-        drv->ascendScanData(nodes, count);
-        for (int pos = 0; pos < (int)count ; ++pos) {
+        drv->ascendScanData(nodes, *rplidar_scanned_node_count);
+        /* Printing with math floor/ceil
+        for (int pos = 0; pos < (int)*rplidar_scanned_node_count ; ++pos) {
             printf("%s theta: %03.2f Dist: %08.2f Q: %d \n", 
                 (nodes[pos].sync_quality & RPLIDAR_RESP_MEASUREMENT_SYNCBIT) ?"S ":"  ", 
                 (nodes[pos].angle_q6_checkbit >> RPLIDAR_RESP_MEASUREMENT_ANGLE_SHIFT)/64.0f,
                 nodes[pos].distance_q2/4.0f,
                 nodes[pos].sync_quality >> RPLIDAR_RESP_MEASUREMENT_QUALITY_SHIFT);
         }
+        */
+        for (int pos = 0; pos < (int)*rplidar_scanned_node_count ; ++pos) {
+            printf("%s theta: %f Dist: %f Q: %d \n", 
+                (nodes[pos].sync_quality & RPLIDAR_RESP_MEASUREMENT_SYNCBIT) ?"S ":"  ", 
+                (nodes[pos].angle_q6_checkbit >> RPLIDAR_RESP_MEASUREMENT_ANGLE_SHIFT)/64.0f,
+                nodes[pos].distance_q2/4.0f,
+                nodes[pos].sync_quality >> RPLIDAR_RESP_MEASUREMENT_QUALITY_SHIFT);
+        }
+            
     }
 }
-
 
 RplidarModule::RplidarModule(int lidar_no)
 {
@@ -234,11 +236,19 @@ void RplidarModule::startSystem()
     }
 }
 
-void RplidarModule::grabBatchScanData() //this is the actual code that grabs data corresponding to while loop in ultra simple rplidar example program
+void RplidarModule::grabBatchScanData(LIDAR_batch_scan_data * lidar_batch_scan_data)
 {
     if(this->is_initialized) {
     	std::cout << "RplidarModule "<< this->lidar_ID <<": grabbing batch scan data. \n";
-        rplidar_grab_batch_scan_data(this->drv);
+        
+
+        rplidar_response_measurement_node_t nodes[360*2]; //Typical scan data is 450 at default rotating speed. 720 is a safe size.
+        size_t rplidar_scan_node_capacity = _countof(nodes);
+        size_t rplidar_scanned_node_count;
+
+        rplidar_grab_batch_scan_data(this->drv, nodes, rplidar_scan_node_capacity, &rplidar_scanned_node_count); //get scan data from rplidar
+        //transfer rplidar batch_scan into standard form
+        std::cout<<"rplidar node capacity: "<<rplidar_scan_node_capacity<<" rplidar_scanned_node_count: "<<rplidar_scanned_node_count<<"\n";
     } else {
         std::cout << "Module is not initialized! \n";
     }

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "rplidar_module.hpp"
+#include "LIDAR_data_structures.hpp"
 
 #include <unistd.h>
 
@@ -19,12 +20,13 @@ int main()
 	RplidarModule lidar(lidar_ID);
 
 	lidar.initializeHardware();
-	sleepForMs(5000);
+	sleepForMs(2000);
 	lidar.startSystem();
 
-	lidar.grabBatchScanData();
+	LIDAR_batch_scan_data lidar_batch_scan_data;
+	lidar.grabBatchScanData(&lidar_batch_scan_data);
 
-	sleepForMs(5000);
+	sleepForMs(2000);
 	lidar.stopSystem();
 	lidar.disposeRplidar();
 
