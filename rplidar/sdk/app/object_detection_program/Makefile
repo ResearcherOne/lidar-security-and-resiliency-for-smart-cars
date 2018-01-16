@@ -22,7 +22,7 @@ MODULE_NAME := $(notdir $(CURDIR))
 
 include $(HOME_TREE)/mak_def.inc
 
-CXXSRC += main.cpp rplidar_module.cpp rplidar_module.hpp
+CXXSRC += main.cpp rplidar_module.cpp rplidar_module.hpp object_detection_module.cpp object_detection_module.hpp
 C_INCLUDES += -I$(CURDIR)/../../sdk/include
 
 EXTRA_OBJ := 

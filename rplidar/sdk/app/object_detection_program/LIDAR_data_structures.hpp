@@ -37,7 +37,7 @@ struct LIDAR_batch_scan_data
 	long long int timestamp_msec;
 	int scanned_data_count;
 	int lidar_ID;
-	LIDAR_data_point LIDAR_data_point_array[];
+	LIDAR_data_point LIDAR_data_point_array[720]; //dirt workaround is having set size of the array. I have to initialize that in my program. Change this.
 };
 
 #endif
