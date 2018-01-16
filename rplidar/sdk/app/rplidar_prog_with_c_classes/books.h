@@ -1,5 +1,5 @@
-#ifndef RPLIDAR_MODULE_H
-#define RPLIDAR_MODULE_H
+#ifndef BOOKS_H
+#define BOOKS_H
 
 #include <string.h>
 

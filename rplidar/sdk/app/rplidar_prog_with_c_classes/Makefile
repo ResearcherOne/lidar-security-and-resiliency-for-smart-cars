@@ -22,7 +22,7 @@ MODULE_NAME := $(notdir $(CURDIR))
 
 include $(HOME_TREE)/mak_def.inc
 
-CXXSRC += main.c books.c books.h
+CXXSRC += main.cpp books.cpp books.h
 C_INCLUDES += -I$(CURDIR)/../../sdk/include
 CXX_INCLUDES += -I$(CURDIR)
 

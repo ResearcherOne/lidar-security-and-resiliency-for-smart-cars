@@ -1,5 +1,5 @@
 #include <iostream>
-#include "rplidar_module.h"
+#include "rplidar_module.hpp"
 
 
 #include <stdio.h>
@@ -26,9 +26,6 @@ static inline void delay(_word_size_t ms){
 #endif
 
 using namespace rp::standalone::rplidar;
-
-RPlidarDriver * drv; //Shall I set this as private field in the class??
-u_result     op_result;
 
 bool checkRPLIDARHealth(RPlidarDriver * drv)
 {
@@ -71,9 +68,11 @@ void rplidar_hardware_on_finish(RPlidarDriver * drv)
 	RPlidarDriver::DisposeDriver(drv);
 }
 
-bool rplidar_hardware_initialization()
+bool rplidar_hardware_initialization(RPlidarDriver * drv)
 {
 	bool is_initialization_succeed = true;
+
+    u_result     op_result;    
 
 	const char * opt_com_path = NULL; 		//get com path as argument
     _u32         opt_com_baudrate = 115200; //get baudrate as argument
@@ -150,6 +149,7 @@ bool rplidar_hardware_initialization()
 
 void rplidar_grab_batch_scan_data(RPlidarDriver * drv)
 {
+    u_result     op_result;
 	rplidar_response_measurement_node_t nodes[360*2];
     size_t   count = _countof(nodes);
     op_result = drv->grabScanData(nodes, count);
@@ -166,39 +166,39 @@ void rplidar_grab_batch_scan_data(RPlidarDriver * drv)
     }
 }
 
-bool RplidarModule::initializeSystem(int lidar_no)
+bool RplidarModule_initializeSystem(struct RplidarModule *rplidar, int lidar_no)
 {
 	bool is_rplidar_initialized = false;
-	is_rplidar_initialized = rplidar_hardware_initialization();
+	is_rplidar_initialized = rplidar_hardware_initialization(rplidar->drv);
 
 
-	is_scanning = false;
-	lidar_ID = lidar_no;
+	rplidar->is_scanning = false;
+	rplidar->lidar_ID = lidar_no;
 	return is_rplidar_initialized;
 }
 
-void RplidarModule::startSystem()
+void RplidarModule_startSystem(struct RplidarModule *rplidar)
 {
-	std::cout << "RplidarModule "<< lidar_ID <<": starting the system! \n";
-	rplidar_start_scanning(drv);
-	is_scanning = true;
+	std::cout << "RplidarModule "<< rplidar->lidar_ID <<": starting the system! \n";
+	rplidar_start_scanning(rplidar->drv);
+	rplidar->is_scanning = true;
 }
 
-void RplidarModule::grabBatchScanData() //this is the actual code that grabs data corresponding to while loop in ultra simple rplidar example program
+void RplidarModule_grabBatchScanData(struct RplidarModule *rplidar) //this is the actual code that grabs data corresponding to while loop in ultra simple rplidar example program
 {
-	std::cout << "RplidarModule "<< lidar_ID <<": grabbing batch scan data. \n";
-	rplidar_grab_batch_scan_data(drv);
+	std::cout << "RplidarModule "<< rplidar->lidar_ID <<": grabbing batch scan data. \n";
+	rplidar_grab_batch_scan_data(rplidar->drv);
 }
 
-void RplidarModule::stopSystem() //user program MUST call this before program finishes. (including when ctrl+c is pressed)
+void RplidarModule_stopSystem(struct RplidarModule *rplidar) //user program MUST call this before program finishes. (including when ctrl+c is pressed)
 {
-	std::cout << "RplidarModule "<< lidar_ID <<": stopping the system!! \n";
-	rplidar_stop_scanning(drv);
-	is_scanning = false;
+	std::cout << "RplidarModule "<< rplidar->lidar_ID <<": stopping the system!! \n";
+	rplidar_stop_scanning(rplidar->drv);
+	rplidar->is_scanning = false;
 }
 
-void RplidarModule::disposeRplidar() //Am I also supposed to delete this class/object itself??
+void RplidarModule_disposeRplidar(struct RplidarModule *rplidar) //Am I also supposed to delete this class/object itself??
 {
-	if(is_scanning) stopSystem(); //should i add the namespace thing?? - RplidarModule::stopSystem
-	rplidar_hardware_on_finish(drv);
+	if(rplidar->is_scanning) RplidarModule_stopSystem(rplidar); //should i add the namespace thing?? - RplidarModule::stopSystem
+	rplidar_hardware_on_finish(rplidar->drv);
 }

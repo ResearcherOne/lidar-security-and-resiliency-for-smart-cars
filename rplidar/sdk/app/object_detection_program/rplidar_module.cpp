@@ -1,5 +1,5 @@
 #include <iostream>
-#include "rplidar_module.h"
+#include "rplidar_module.hpp"
 
 
 #include <stdio.h>
@@ -26,9 +26,6 @@ static inline void delay(_word_size_t ms){
 #endif
 
 using namespace rp::standalone::rplidar;
-
-RPlidarDriver * drv; //Shall I set this as private field in the class??
-u_result     op_result;
 
 bool checkRPLIDARHealth(RPlidarDriver * drv)
 {
@@ -68,12 +65,19 @@ void rplidar_stop_scanning(RPlidarDriver * drv)
 
 void rplidar_hardware_on_finish(RPlidarDriver * drv)
 {
-	RPlidarDriver::DisposeDriver(drv);
+    if(drv) {
+        std::cout << "Drv exists! Destroying it. \n";
+        RPlidarDriver::DisposeDriver(drv); //drv is probably already disposed!!
+    } else {
+        std::cout << "Drv is already destroyed.\n";
+    }
 }
 
-bool rplidar_hardware_initialization()
+bool rplidar_hardware_initialization(RPlidarDriver * drv)
 {
 	bool is_initialization_succeed = true;
+
+    u_result     op_result;
 
 	const char * opt_com_path = NULL; 		//get com path as argument
     _u32         opt_com_baudrate = 115200; //get baudrate as argument
@@ -91,6 +95,7 @@ bool rplidar_hardware_initialization()
 		#endif
     }
 
+/*
     // create the driver instance
     drv = RPlidarDriver::CreateDriver(RPlidarDriver::DRIVER_TYPE_SERIALPORT);
     
@@ -99,7 +104,7 @@ bool rplidar_hardware_initialization()
         is_initialization_succeed = false;
         return is_initialization_succeed;
     }
-
+*/
 
     // make connection...
     if (IS_FAIL(drv->connect(opt_com_path, opt_com_baudrate))) {
@@ -150,6 +155,8 @@ bool rplidar_hardware_initialization()
 
 void rplidar_grab_batch_scan_data(RPlidarDriver * drv)
 {
+    u_result     op_result;
+
 	rplidar_response_measurement_node_t nodes[360*2];
     size_t   count = _countof(nodes);
     op_result = drv->grabScanData(nodes, count);
@@ -166,39 +173,97 @@ void rplidar_grab_batch_scan_data(RPlidarDriver * drv)
     }
 }
 
-bool RplidarModule::initializeSystem(int lidar_no)
+
+RplidarModule::RplidarModule(int lidar_no)
 {
-	bool is_rplidar_initialized = false;
-	is_rplidar_initialized = rplidar_hardware_initialization();
+    this->lidar_ID = lidar_no;
+    this->is_scanning = false;
+    this->is_initialized = false;
+    this->is_drv_set = false;
+}
+
+RplidarModule::~RplidarModule()
+{
+    std::cout << "Class destructor is executed! \n";
+    this->disposeRplidar();
+}
+
+bool RplidarModule::initializeHardware() //No prob. here
+{
+    if(!(this->is_initialized)) {
+    	bool is_rplidar_initialized = false;
 
 
-	is_scanning = false;
-	lidar_ID = lidar_no;
-	return is_rplidar_initialized;
+        // create the driver instance
+        this->drv = RPlidarDriver::CreateDriver(RPlidarDriver::DRIVER_TYPE_SERIALPORT);
+        
+        if (!this->drv) {
+            fprintf(stderr, "insufficent memory, exit\n");
+            is_rplidar_initialized = false;
+            return is_rplidar_initialized;
+        }
+
+
+
+    	is_rplidar_initialized = rplidar_hardware_initialization(this->drv); //is this->drv pass by value or reference???
+
+        if (this->drv) {
+            this->is_drv_set = true;
+        } else {
+            this->is_drv_set = false;
+        }
+
+        this->is_initialized = is_rplidar_initialized;
+    	return is_rplidar_initialized;
+    } else {
+        std::cout << "Module is already initialized! \n";
+        return false;
+    }
 }
 
 void RplidarModule::startSystem()
 {
-	std::cout << "RplidarModule "<< lidar_ID <<": starting the system! \n";
-	rplidar_start_scanning(drv);
-	is_scanning = true;
+    if(this->is_initialized) {
+        std::cout << "RplidarModule "<< this->lidar_ID <<": starting the system! \n";
+
+        RPlidarDriver * drv = this->drv;
+        rplidar_start_scanning(drv);
+        this->is_scanning = true;    
+    } else {
+        std::cout << "Module is not initialized! \n";
+    }
 }
 
 void RplidarModule::grabBatchScanData() //this is the actual code that grabs data corresponding to while loop in ultra simple rplidar example program
 {
-	std::cout << "RplidarModule "<< lidar_ID <<": grabbing batch scan data. \n";
-	rplidar_grab_batch_scan_data(drv);
+    if(this->is_initialized) {
+    	std::cout << "RplidarModule "<< this->lidar_ID <<": grabbing batch scan data. \n";
+        rplidar_grab_batch_scan_data(this->drv);
+    } else {
+        std::cout << "Module is not initialized! \n";
+    }
 }
 
 void RplidarModule::stopSystem() //user program MUST call this before program finishes. (including when ctrl+c is pressed)
 {
-	std::cout << "RplidarModule "<< lidar_ID <<": stopping the system!! \n";
-	rplidar_stop_scanning(drv);
-	is_scanning = false;
+    if(this->is_initialized) {
+    	std::cout << "RplidarModule "<< this->lidar_ID <<": stopping the system!! \n";
+    	rplidar_stop_scanning(this->drv);
+    	this->is_scanning = false;
+    } else {
+        std::cout << "Module is not initialized! \n";
+    }
 }
 
 void RplidarModule::disposeRplidar() //Am I also supposed to delete this class/object itself??
 {
-	if(is_scanning) stopSystem(); //should i add the namespace thing?? - RplidarModule::stopSystem
-	rplidar_hardware_on_finish(drv);
+    if(this->is_initialized) {
+        if(this->is_scanning) stopSystem(); //should i add the namespace thing?? - RplidarModule::stopSystem
+        if(this->is_drv_set) {
+            rplidar_hardware_on_finish(this->drv);
+            this->is_drv_set = false;
+        }
+    } else {
+        std::cout << "Module is not initialized! \n";
+    }
 }

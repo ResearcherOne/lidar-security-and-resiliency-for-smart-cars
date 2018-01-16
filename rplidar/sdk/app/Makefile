@@ -20,7 +20,8 @@ HOME_TREE := ../
 
 #MAKE_TARGETS := object_detection_program simple_grabber ultra_simple scan-and-timestamp scan-and-save 
 #MAKE_TARGETS := object_detection_program
-MAKE_TARGETS := rplidar_prog_with_c_classes
+#MAKE_TARGETS := rplidar_prog_with_c_classes
+MAKE_TARGETS := object_detection_program
 
 include $(HOME_TREE)/mak_def.inc
 

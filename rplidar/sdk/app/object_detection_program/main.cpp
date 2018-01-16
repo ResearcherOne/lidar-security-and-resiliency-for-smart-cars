@@ -1,16 +1,34 @@
 #include <iostream>
-#include "rplidar_module.h"
+#include "rplidar_module.hpp"
+
+#include <unistd.h>
+
 
 using namespace std;
 
-//Compiling the example on Ubuntu: g++ main.cpp -o main.o rplidar_module.h rplidar_module.cpp rplidar.h rplidar.cpp
+void sleepForMs(unsigned int milliseconds)
+{
+	usleep(milliseconds*1000);
+}
+
 int main()
 {
-	int lidar_ID = 4;
+	int lidar_ID = 8;
 	cout <<"This program will create rplidar_module with ID "<<lidar_ID<<" \n";
 	
-	RplidarModule lidar;
-	lidar.initializeSystem(lidar_ID);
+	RplidarModule lidar(lidar_ID);
+
+	lidar.initializeHardware();
+	sleepForMs(5000);
 	lidar.startSystem();
+
+	lidar.grabBatchScanData();
+
+	sleepForMs(5000);
+	lidar.stopSystem();
+	lidar.disposeRplidar();
+
+
+	cout <<"Program is finished. \n";
 	return 0;
 }

@@ -3,7 +3,7 @@
 
 void initializeBook(struct Books *book)
 {
-    strcpy( book->title, "Test book");
+    strcpy( book->title, "C Programming BOOK!");
     book->book_id = 1;
 }
 
