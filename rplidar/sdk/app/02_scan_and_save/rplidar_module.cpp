@@ -53,14 +53,14 @@ bool checkRPLIDARHealth(RPlidarDriver * drv)
 
 void rplidar_start_scanning(RPlidarDriver * drv)
 {
-	drv->startMotor(); 	//start motor
-    drv->startScan(); 	//start scan
+    drv->startMotor();  //start motor
+    drv->startScan();   //start scan
 }
 
 void rplidar_stop_scanning(RPlidarDriver * drv)
 {
-	drv->stop(); 		//stop motor
-    drv->stopMotor(); 	//stop scan
+    drv->stop();        //stop motor
+    drv->stopMotor();   //stop scan
 }
 
 void rplidar_hardware_on_finish(RPlidarDriver * drv)
@@ -75,11 +75,11 @@ void rplidar_hardware_on_finish(RPlidarDriver * drv)
 
 bool rplidar_hardware_initialization(RPlidarDriver * drv)
 {
-	bool is_initialization_succeed = true;
+    bool is_initialization_succeed = true;
 
     u_result     op_result;
 
-	const char * opt_com_path = NULL; 		//get com path as argument
+    const char * opt_com_path = NULL;       //get com path as argument
     _u32         opt_com_baudrate = 115200; //get baudrate as argument
 
     printf("Ultra simple LIDAR data grabber for RPLIDAR.\n"
@@ -87,12 +87,12 @@ bool rplidar_hardware_initialization(RPlidarDriver * drv)
 
 
     if (!opt_com_path) {
-		#ifdef _WIN32
-		        // use default com port
-		        opt_com_path = "\\\\.\\com3";
-		#else
-		        opt_com_path = "/dev/ttyUSB0";
-		#endif
+        #ifdef _WIN32
+                // use default com port
+                opt_com_path = "\\\\.\\com3";
+        #else
+                opt_com_path = "/dev/ttyUSB0";
+        #endif
     }
 
     // make connection...
@@ -106,7 +106,7 @@ bool rplidar_hardware_initialization(RPlidarDriver * drv)
 
     rplidar_response_device_info_t devinfo;
 
-	// retrieving the device info
+    // retrieving the device info
     ////////////////////////////////////////
     op_result = drv->getDeviceInfo(devinfo);
 
@@ -190,7 +190,7 @@ RplidarModule::~RplidarModule()
 bool RplidarModule::initializeHardware() //No prob. here
 {
     if(!(this->is_initialized)) {
-    	bool is_rplidar_initialized = false;
+        bool is_rplidar_initialized = false;
 
 
         // create the driver instance
@@ -204,7 +204,7 @@ bool RplidarModule::initializeHardware() //No prob. here
 
 
 
-    	is_rplidar_initialized = rplidar_hardware_initialization(this->drv); //is this->drv pass by value or reference???
+        is_rplidar_initialized = rplidar_hardware_initialization(this->drv); //is this->drv pass by value or reference???
 
         if (this->drv) {
             this->is_drv_set = true;
@@ -213,7 +213,7 @@ bool RplidarModule::initializeHardware() //No prob. here
         }
 
         this->is_initialized = is_rplidar_initialized;
-    	return is_rplidar_initialized;
+        return is_rplidar_initialized;
     } else {
         std::cout << "Module is already initialized! \n";
         return false;
@@ -236,7 +236,7 @@ void RplidarModule::startSystem()
 void RplidarModule::grabBatchScanData(LIDAR_batch_scan_data * lidar_batch_scan, int LIDAR_ID, long long int batch_timestamp)
 {
     if(this->is_initialized) {
-    	//std::cout << "RplidarModule "<< this->lidar_ID <<": grabbing batch scan data. \n";
+        //std::cout << "RplidarModule "<< this->lidar_ID <<": grabbing batch scan data. \n";
         
         rplidar_response_measurement_node_t nodes[360*2]; //Typical scan data is 450 at default rotating speed. 720 is a safe size.
         size_t rplidar_scan_node_capacity = _countof(nodes);
@@ -257,9 +257,9 @@ void RplidarModule::grabBatchScanData(LIDAR_batch_scan_data * lidar_batch_scan, 
 void RplidarModule::stopSystem() //user program MUST call this before program finishes. (including when ctrl+c is pressed)
 {
     if(this->is_initialized) {
-    	std::cout << "RplidarModule "<< this->lidar_ID <<": stopping the system!! \n";
-    	rplidar_stop_scanning(this->drv);
-    	this->is_scanning = false;
+        std::cout << "RplidarModule "<< this->lidar_ID <<": stopping the system!! \n";
+        rplidar_stop_scanning(this->drv);
+        this->is_scanning = false;
     } else {
         std::cout << "Module is not initialized! \n";
     }

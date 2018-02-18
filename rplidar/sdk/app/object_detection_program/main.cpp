@@ -58,10 +58,10 @@ int main()
 	sleepForMs(2000);
 	lidar.startSystem();
 
-
+	long long int timestamp = 500;
 	while(!ctrl_c_pressed) {
 		LIDAR_batch_scan_data lidar_batch_scan_data;
-		lidar.grabBatchScanData(&lidar_batch_scan_data);
+		lidar.grabBatchScanData(&lidar_batch_scan_data, lidar_ID, timestamp);
 
 		LIDAR_data_point resultPoint;
 		int quality_threshold = 5;
