@@ -45,18 +45,24 @@ int main()
 		exit (EXIT_FAILURE);
 	}
 
-	int dataset_no = (postgres_module.getHighestDatasetNo()+1);
+	int dataset_no = 5;//(postgres_module.getHighestDatasetNo()+1);
 	bool is_abnormal = false;
 	
+	int counter = 0;
+	int total_collected_data_count = 0;
+	cout<<"Counter: "<<counter<<" total point collected: "<<total_collected_data_count<<" dataset_no: "<<dataset_no<<"\n";
 	while(!ctrl_c_pressed) { //Change this to break while loop to number of grabbatchscandata.
 		//When two lidars are present, I will need to use threads in order to simultenously fetch data from them.
 		LIDAR_batch_scan_data lidar_batch_scan_data;
 		lidar.grabBatchScanData(&lidar_batch_scan_data, lidar_ID, util.getCurrentTimeMilliseconds());
 		
-		cout<<"YO YO "<<lidar_batch_scan_data.lidar_ID<<"\n";
-		cout<<"YO YO timestamp "<<lidar_batch_scan_data.timestamp_msec<<"\n";
 		postgres_module.saveBatchScanData(lidar_batch_scan_data, dataset_no, is_abnormal);
+		counter++;
+		total_collected_data_count = total_collected_data_count + lidar_batch_scan_data.scanned_data_count;
+
+		if(counter>=450) break;
 	}
+		cout<<"Counter: "<<counter<<" total point collected: "<<total_collected_data_count<<" dataset_no: "<<dataset_no<<"\n";
 
 	postgres_module.disconnect();
 
