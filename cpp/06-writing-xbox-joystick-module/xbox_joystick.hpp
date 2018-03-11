@@ -1,0 +1,39 @@
+#ifndef XBOX_JOYSTICK
+#define XBOX_JOYSTICK
+
+enum xboxControllerEvents
+{ //PRESS: >0, RELEASE: =0
+	A_PRESS, 	//0
+	A_RELEASE,
+	B_PRESS, //1
+	B_RELEASE,
+	X_PRESS, //2
+	X_RELEASE,
+	Y_PRESS, //3
+	Y_RELEASE,
+	LEFTWARD_PRESS, //11
+	LEFTWARD_RELEASE,
+	RIGHTWARD_PRESS, //12
+	RIGHTWARD_RELEASE,
+	UPWARD_PRESS, //13
+	UPWARD_RELEASE,
+	DOWNWARD_PRESS, //14
+	DOWNWARD_RELEASE,
+	RB_PRESS, //5
+	RB_RELEASE,
+	LB_PRESS, //4
+	LB_RELEASE,
+	START_PRESS, //7
+	START_RELEASE,
+	BACK_PRESS, //6
+	BACK_RELEASE,
+	LEFT_JOYSTICK_CLICK_PRESS, //9
+	LEFT_JOYSTICK_CLICK_RELEASE,
+	RIGHT_JOYSTICK_CLICK_PRESS, //10
+	RIGHT_JOYSTICK_CLICK_RELEASE,
+};
+
+bool initializeXboxJoystick(char *fileToOpen);
+void processJoystickEvents();
+void setXboxEventHandler(void (*callbackFunc)(xboxControllerEvents));
+#endif
