@@ -38,7 +38,6 @@ void print_device_info(int fd) {
 }
 
 void process_event(struct js_event jse) {
-	printf("EVENT IS RECEIVED \n");
 	if (jse.type == 1 && jse.value > 0) {
 		xboxControllerEvents xboxEvent;
 		if(jse.number == 0) {
