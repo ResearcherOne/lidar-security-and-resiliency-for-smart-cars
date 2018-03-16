@@ -16,17 +16,20 @@
 # *
 # */
 #
-HOME_TREE := ../
+HOME_TREE := ../../
 
-#MAKE_TARGETS := object_detection_program simple_grabber ultra_simple scan-and-timestamp scan-and-save 
-#MAKE_TARGETS := object_detection_program
-#MAKE_TARGETS := rplidar_prog_with_c_classes
-#MAKE_TARGETS := 02_scan_and_save
-MAKE_TARGETS := 04_remote_move_scan_save
+MODULE_NAME := $(notdir $(CURDIR))
+
 include $(HOME_TREE)/mak_def.inc
 
-all: make_subs
+CXXSRC += main.cpp robot_base.cpp robot_base.hpp ../03_remote_scan_and_save/rplidar_module.cpp ../03_remote_scan_and_save/rplidar_module.hpp ../03_remote_scan_and_save/postgres_module.cpp ../03_remote_scan_and_save/postgres_module.hpp ../03_remote_scan_and_save/LIDAR_data_structures.cpp ../03_remote_scan_and_save/LIDAR_data_structures.hpp ../03_remote_scan_and_save/util_module.hpp ../03_remote_scan_and_save/util_module.cpp ../../../../cpp/06-writing-xbox-joystick-module/xbox_joystick.hpp ../../../../cpp/06-writing-xbox-joystick-module/xbox_joystick.cpp
+C_INCLUDES += -I$(CURDIR)/../../sdk/include
+
+EXTRA_OBJ := 
+LD_LIBS += -lstdc++ -lpthread -lpqxx -lpq
+
+all: build_app
 
 include $(HOME_TREE)/mak_common.inc
 
-clean: make_subs
+clean: clean_app
