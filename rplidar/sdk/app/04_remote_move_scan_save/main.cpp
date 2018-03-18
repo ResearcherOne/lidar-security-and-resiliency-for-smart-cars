@@ -103,7 +103,7 @@ void sleepForMs(unsigned int milliseconds)
 	usleep(milliseconds*1000);
 }
 
-int main()
+int main(int argc, char* argv[])
 {
 	signal(SIGINT, ctrlc);
 
@@ -117,7 +117,7 @@ int main()
 	robot_base->setUSB(robot_base_USB_no);
 
 	UtilModule util;
-	PostgresModule postgres_module("test", "researcher1", "menohavepass", "127.0.0.1", "5432", "rplidar_table_v2");
+	PostgresModule postgres_module("test", "researcher1", "menohavepass", "127.0.0.1", "5432", "rplidar_table_v2"); //6 parameters here
 	bool is_connection_succeed = postgres_module.connect();
 	if(!is_connection_succeed) {
 		cout <<"Unable to connect to database, exiting.\n";
