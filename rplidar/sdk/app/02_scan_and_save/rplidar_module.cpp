@@ -73,13 +73,13 @@ void rplidar_hardware_on_finish(RPlidarDriver * drv)
     }
 }
 
-bool rplidar_hardware_initialization(RPlidarDriver * drv)
+bool rplidar_hardware_initialization(RPlidarDriver * drv, const char * opt_com_path)
 {
     bool is_initialization_succeed = true;
 
     u_result     op_result;
 
-    const char * opt_com_path = NULL;       //get com path as argument
+    //const char * opt_com_path = NULL;       //get com path as argument
     _u32         opt_com_baudrate = 115200; //get baudrate as argument
 
     printf("Ultra simple LIDAR data grabber for RPLIDAR.\n"
@@ -187,7 +187,7 @@ RplidarModule::~RplidarModule()
     this->disposeRplidar();
 }
 
-bool RplidarModule::initializeHardware() //No prob. here
+bool RplidarModule::initializeHardware(const char * opt_com_path) //No prob. here
 {
     if(!(this->is_initialized)) {
         bool is_rplidar_initialized = false;
@@ -204,7 +204,7 @@ bool RplidarModule::initializeHardware() //No prob. here
 
 
 
-        is_rplidar_initialized = rplidar_hardware_initialization(this->drv); //is this->drv pass by value or reference???
+        is_rplidar_initialized = rplidar_hardware_initialization(this->drv, opt_com_path); //is this->drv pass by value or reference???
 
         if (this->drv) {
             this->is_drv_set = true;

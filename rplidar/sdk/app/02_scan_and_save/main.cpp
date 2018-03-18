@@ -32,7 +32,7 @@ int main()
 	
 	RplidarModule lidar(lidar_ID);
 
-	lidar.initializeHardware();
+	lidar.initializeHardware("/dev/ttyUSB0");
 	sleepForMs(2000);
 	lidar.startSystem();
 
