@@ -27,6 +27,7 @@ using namespace std;
 
 RplidarModule* lidar;
 RobotBase* robot_base;
+LoggerModule* logger;
 
 bool isPrimaryNode = true;
 int robot_base_USB_no = 1;
@@ -66,16 +67,16 @@ void toggle_data_collection() {
 		if(is_lidar_initialized) {
 			is_data_collection_phase = true;
 			lidar->startSystem();
-			logger.log("Data collection is started.");
+			logger->log("Data collection is started.");
 		}
 	} else {
 		is_data_collection_phase = !is_data_collection_phase;
 		if(is_data_collection_phase) {
 			lidar->startSystem();
-			logger.log("Data collection is started.");
+			logger->log("Data collection is started.");
 		} else {
 			lidar->stopSystem();
-			logger.log("Data collection is stopped.");
+			logger->log("Data collection is stopped.");
 		}
 	}
 }
@@ -152,7 +153,7 @@ int main(int argc, char* argv[])
 	const char* db_table_name = argv[10];	//	"rplidar_table_v2"
 	dataset_no = atoi(argv[11]);			//	5
 	is_abnormal = atoi(argv[12]); 			//	(bool) 0 or 1
-	LoggerModule logger(argv[13]);			// ./logger_export.log
+	logger = new LoggerModule(argv[13]);			// ./logger_export.log
 
 	signal(SIGINT, ctrlc);
 
@@ -170,7 +171,7 @@ int main(int argc, char* argv[])
 	PostgresModule postgres_module(db_name, db_username, db_password, db_ip, db_port, db_table_name);
 	bool is_connection_succeed = postgres_module.connect();
 	if(!is_connection_succeed) {
-		logger.log("Unable to connect to database, exiting.");
+		logger->log("Unable to connect to database, exiting.");
 		exit (EXIT_FAILURE);
 	}
 
@@ -185,7 +186,7 @@ int main(int argc, char* argv[])
 			total_collected_data_count = total_collected_data_count + lidar_batch_scan_data.scanned_data_count;
 		}
 	}
-	logger.log(	 "Total points collected: "+toString(total_collected_data_count)+" "
+	logger->log(	 "Total points collected: "+toString(total_collected_data_count)+" "
 				+"lidar_com_port: "+argv[1]+" "
 				+"lidar_ID: "+argv[2]+" "
 				+"isPrimaryNode: "+argv[3]+" "
@@ -206,6 +207,6 @@ int main(int argc, char* argv[])
 	sleepForMs(15000);
 	dispose_lidar();
 
-	logger.log("Program is finished. \n");
+	logger->log("Program is finished. \n");
 	return 0;
 }
