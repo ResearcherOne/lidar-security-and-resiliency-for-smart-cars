@@ -2,7 +2,7 @@
 #include "../02_scan_and_save/rplidar_module.hpp"
 #include "../03_remote_scan_and_save/LIDAR_data_structures.hpp"
 #include "../03_remote_scan_and_save/postgres_module.hpp"
-#include "../03_remote_scan_and_save/util_module.hpp"
+#include "../02_scan_and_save/util_module.hpp"
 #include "../../../../cpp/06-writing-xbox-joystick-module/xbox_joystick.hpp"
 #include "robot_base.hpp"
 #include "../../../../cpp/09-logger-module/logger_module.hpp"
@@ -168,14 +168,12 @@ int main(int argc, char* argv[])
 	PostgresModule postgres_module(db_name, db_username, db_password, db_ip, db_port, db_table_name);
 	bool is_connection_succeed = postgres_module.connect();
 	if(!is_connection_succeed) {
-		logger.log("Unable to connect to database, exiting.\n");
+		logger.log("Unable to connect to database, exiting.");
 		exit (EXIT_FAILURE);
 	}
 
 	
-	int counter = 0;
 	int total_collected_data_count = 0;
-	logger.log("Counter: "+toString(counter)+" total point collected: "+toString(total_collected_data_count)+" dataset_no: "+toString(dataset_no)+"\n");
 	while(!ctrl_c_pressed && !is_exit_button_pressed) { //Change this to break while loop to number of grabbatchscandata.
 		processJoystickEvents();
 		if(is_data_collection_phase) {
@@ -185,7 +183,21 @@ int main(int argc, char* argv[])
 			total_collected_data_count = total_collected_data_count + lidar_batch_scan_data.scanned_data_count;
 		}
 	}
-		logger.log("Counter: "+toString(counter)+" total point collected: "+toString(total_collected_data_count)+" dataset_no: "+toString(dataset_no)+"\n"); //shall I export metadata???
+	logger.log(	 "Total points collected: "+toString(total_collected_data_count)+" "
+				+"lidar_com_port: "+argv[1]+" "
+				+"lidar_ID: "+argv[2]+" "
+				+"isPrimaryNode: "+argv[3]+" "
+				+"robot_base_USB_no: "+argv[4]+" "
+				+"db_name: "+argv[5]+" "
+				+"db_username: "+argv[6]+" "
+				+"db_password: "+argv[7]+" "
+				+"db_ip: "+argv[8]+" "
+				+"db_port: "+argv[9]+" "
+				+"db_table_name: "+argv[10]+" "
+				+"dataset_no: "+argv[11]+" "
+				+"is_abnormal: "+argv[12]+" "
+				+"LoggerModule: "+argv[13]+" "
+	);
 
 	postgres_module.disconnect();
 	dispose_lidar();
