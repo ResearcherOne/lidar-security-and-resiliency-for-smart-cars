@@ -1,2 +1,30 @@
+Reference Command
+	sudo ./04_remote_move_scan_save <lidar_port> <lidar_id> <is_primary_node> <robot_base_usb_no> <db_name> <db_username> <db_password> <db_ip> <db_port> <db_table_name> <db_dataset_no> <is_abnormal_dataset> <logger_export_file_path>
+DB Info:
+	DB Name:
+	Tables:
+		rplidar_table_v2 - in use
+		test_table - for testing
+
+Dataset #0
+	Duration: 						30 minutes
+	Start Date: 					1521459054488
+	Stop Date: 						1521460891003
+	Total collected points count:	3561548
+	Environment description:		yurt ortak alan
+	Environment photo:				Telegram #0
+	The command:
+		sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 0 0 ./primary_node_logs.log
+	The corresponding critical log:
+		Total points collected: 3561548 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 0 is_abnormal: 0 LoggerModule: ./primary_node_logs.
 Dataset #1
-	
+	Duration: 						15 minutes
+	Start Date: 					
+	Stop Date: 						
+	Total collected points count:	
+	Environment description:		ogrenci merkezi asansor yani
+	Environment photo:				Telegram #1
+	The command:
+		sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 test 1 0 ./test_primary_node_logs.log
+	The corresponding critical log:
+		Total points collected: 3561548 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 0 is_abnormal: 0 LoggerModule: ./primary_node_logs.log

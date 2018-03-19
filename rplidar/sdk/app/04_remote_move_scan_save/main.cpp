@@ -66,14 +66,16 @@ void toggle_data_collection() {
 		if(is_lidar_initialized) {
 			is_data_collection_phase = true;
 			lidar->startSystem();
+			logger.log("Data collection is started.");
 		}
 	} else {
 		is_data_collection_phase = !is_data_collection_phase;
-		printf("Data collection state is set to: %d\n",is_data_collection_phase);
 		if(is_data_collection_phase) {
 			lidar->startSystem();
+			logger.log("Data collection is started.");
 		} else {
 			lidar->stopSystem();
+			logger.log("Data collection is stopped.");
 		}
 	}
 }
@@ -200,6 +202,8 @@ int main(int argc, char* argv[])
 	);
 
 	postgres_module.disconnect();
+	lidar->stopSystem();
+	sleepForMs(15000);
 	dispose_lidar();
 
 	logger.log("Program is finished. \n");
