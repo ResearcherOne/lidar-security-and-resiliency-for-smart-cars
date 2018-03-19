@@ -3,6 +3,7 @@
 #include <string>
 #include "robot_base.hpp"
 #include <sstream>
+
 RobotBase::RobotBase()
 {
 
@@ -16,7 +17,7 @@ void RobotBase::setUSB(int usb_no) //use remote control for doing so
 	std::stringstream convert;
 	convert << usb_no;
 	this->usb_no = convert.str();
-	system(("sudo screen /dev/ttyUSB"+this->usb_no).c_str());
+	//system(("sudo screen /dev/ttyUSB"+this->usb_no).c_str());
 }
 void RobotBase::right()
 {

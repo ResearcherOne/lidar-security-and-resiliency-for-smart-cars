@@ -1,2 +1,3 @@
 *.o
 rplidar/sdk/output/*
+*.log
