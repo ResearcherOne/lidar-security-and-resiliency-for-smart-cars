@@ -186,7 +186,7 @@ int main(int argc, char* argv[])
 			total_collected_data_count = total_collected_data_count + lidar_batch_scan_data.scanned_data_count;
 		}
 	}
-	logger->log(	 "Total points collected: "+toString(total_collected_data_count)+" "
+	logger->log( "Total points collected: "+toString(total_collected_data_count)+" "
 				+"lidar_com_port: "+argv[1]+" "
 				+"lidar_ID: "+argv[2]+" "
 				+"isPrimaryNode: "+argv[3]+" "
@@ -202,11 +202,11 @@ int main(int argc, char* argv[])
 				+"LoggerModule: "+argv[13]+" "
 	);
 
+	logger->log("Program is finished. \n");
 	postgres_module.disconnect();
 	lidar->stopSystem();
 	sleepForMs(15000);
 	dispose_lidar();
 
-	logger->log("Program is finished. \n");
 	return 0;
 }

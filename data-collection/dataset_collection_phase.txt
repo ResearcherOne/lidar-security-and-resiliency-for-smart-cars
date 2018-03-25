@@ -1,0 +1,157 @@
+Reference Command
+	sudo ./04_remote_move_scan_save <lidar_port> <lidar_id> <is_primary_node> <robot_base_usb_no> <db_name> <db_username> <db_password> <db_ip> <db_port> <db_table_name> <db_dataset_no> <is_abnormal_dataset> <logger_export_file_path>
+Test Command
+	sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 test_table 1 0 ./test_primary_node_logs.log
+DB Info:
+	DB Name:
+	Tables:
+		rplidar_table_v2 - in use
+		test_table - for testing
+Exports:
+	Dataset 0 to 3 are exported as LIDAR_data_01.csv located in GDRIVE.
+Dataset Exports
+	LIDAR_data_1 contains following datasets: 0,1,2,3
+		2.5h of data
+		659MB
+TO BE EXPORTED
+	LIDAR_data_2 will contain 6,8,9,10,12,13,14
+		total 11h of data
+Procedure for Creating a Dataset
+	Connect to Pi3 over ethernet (while you are connected to wifi or another network connection)
+	[Optional] get previous dataset meta data and note it down to here.
+	Run "Test Command" in order to see everything works as expected.
+	Create new dataset log in this file.
+	Edit "The command" accordingly.
+	Run "screen" program on Pi3 two times.
+	Run the command.
+	Start data collection from remote control
+	Take out batteries of the remote
+	Switch to next "screen"
+	Break the connection with laptop
+	At the end of time period, press back button and put batteries in remote for stopping the program.
+DATA SETS
+	Dataset #0
+		Duration: 						30 minutes
+		Start Date: 					1521459054488
+		Stop Date: 						1521460891003
+		Total collected points count:	3561548
+		Environment description:		yurt ortak alan (duragan)
+		Environment photo:				Telegram - Senior Project Dataset Group
+		The command:
+			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 0 0 ./primary_node_logs.log
+		The corresponding critical log:
+			Total points collected: 3561548 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 0 is_abnormal: 0 LoggerModule: ./primary_node_logs.
+	Dataset #1
+		Duration: 						30 minutes
+		Start Date: 					1521466292704
+		Stop Date: 						1521468194734
+		Total collected points count:	3462536
+		Environment description:		ogrenci merkezi, ozu stor asansor yani (hareketli)
+		Environment photo:				Telegram - Senior Project Dataset Group
+		The command:
+			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 1 0 ./dataset_1_primary_node_logs.log
+		The corresponding critical log:
+			Total points collected: 3462536 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 1 is_abnormal: 0 LoggerModule: ./dataset_1_primary_node_logs.log
+	Dataset #2
+		Duration: 						30 minutes
+		Start Date: 					1521469081957
+		Stop Date: 						1521470935441
+		Total collected points count:	3350270
+		Environment description:		ogrenci merkezi, forum alani nero onu merdiven baslangici (hareketli)
+		Environment photo:				Telegram - Senior Project Dataset Group
+		The command:
+			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 2 0 ./dataset_2_primary_node_logs.log
+		The corresponding critical log:
+			Total points collected: 3350270 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 2 is_abnormal: 0 LoggerModule: ./dataset_2_primary_node_logs.log
+	Dataset #3
+		Duration: 						60 minutes
+		Start Date: 					1521471639019
+		Stop Date: 						1521474446255
+		Total collected points count:	5085117
+		Environment description:		ogrenci merkezi, eski çayhane (duragan)
+		Environment photo:				Telegram - Senior Project Dataset Group
+		The command:
+			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 3 0 ./dataset_3_primary_node_logs.log
+		The corresponding critical log:
+			Total points collected: 5085117 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 3 is_abnormal: 0 LoggerModule: ./dataset_3_primary_node_logs.log 
+	Dataset #4 - TRASH (delete it from the database)
+	Dataset #5 - Supheli (check it out from the DB)
+	Dataset #6
+		Duration: 						90 minutes
+		Start Date: 					1521828004634
+		Stop Date: 						1521833349371
+		Total collected points count:	10086937
+		Environment description:		OzU yurt odasi
+		Environment photo:				Telegram - Senior Project Dataset Group
+		The command:
+			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 6 0 ./dataset_6_primary_node_logs.log
+		The corresponding critical log:
+			Total points collected: 10086937 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 6 is_abnormal: 0 LoggerModule: ./dataset_6_primary_node_logs.log 
+	Dataset #7 - TRASH (delete it from the database)
+	Dataset #8
+		Duration: 						90 minutes
+		Start Date: 					1521962597143
+		Stop Date: 						1521968006562
+		Total collected points count:	9492976
+		Environment description:		OzU Elektronik Lab, hafif hareketli, calisma masasi ustu
+		Environment photo:				Telegram - Senior Project Dataset Group
+		The command:
+			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 8 0 ./dataset_8_primary_node_logs.log
+		The corresponding critical log:
+			Total points collected: 9492976 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 8 is_abnormal: 0 LoggerModule: ./dataset_8_primary_node_logs.log
+	Dataset #9
+		Duration: 						90 minutes
+		Start Date: 					1521968584450
+		Stop Date: 						1521973943141
+		Total collected points count:	
+		Environment description:		OzU Elektronik Lab, hafif hareketli, zeminde
+		Environment photo:				Telegram - Senior Project Dataset Group
+		The command:
+			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 9 0 ./dataset_9_primary_node_logs.log
+		The corresponding critical log:
+			Total points collected: 9635112 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 9 is_abnormal: 0 LoggerModule: ./dataset_9_primary_node_logs.log 
+	Dataset #10
+		Duration: 						90 minutes
+		Start Date: 					1521975020179
+		Stop Date: 						1521980692687
+		Total collected points count:	10107163
+		Environment description:		OzU Elektronik Lab, hafif hareketli, calisma masasi ust bolmeler
+		Environment photo:				Telegram - Senior Project Dataset Group
+		The command:
+			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 10 0 ./dataset_10_primary_node_logs.log
+		The corresponding critical log:
+			Total points collected: 10107163 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 10 is_abnormal: 0 LoggerModule: ./dataset_10_primary_node_logs.log
+	Dataset #11 - TRASH
+	Dataset #12
+		Duration: 						90 minutes
+		Start Date: 					1521981827806
+		Stop Date: 						1521987457514
+		Total collected points count:	9719783
+		Environment description:		OzU Elektronik Lab, hafif hareketli, asistan masasi
+		Environment photo:				Telegram - Senior Project Dataset Group
+		The command:
+			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 12 0 ./dataset_12_primary_node_logs.log
+		The corresponding critical log:
+			Total points collected: 9719783 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 12 is_abnormal: 0 LoggerModule: ./dataset_12_primary_node_logs.log
+	Dataset #13
+		Duration: 						90 minutes
+		Start Date: 					1521988212362
+		Stop Date: 						1521993465285
+		Total collected points count:	9386292
+		Environment description:		OzU Elektronik Lab, hafif hareketli, giris kapisi yani zemin
+		Environment photo:				Telegram - Senior Project Dataset Group
+		The command:
+			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 13 0 ./dataset_13_primary_node_logs.log
+		The corresponding critical log:
+			Total points collected: 9386292 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 13 is_abnormal: 0 LoggerModule: ./dataset_13_primary_node_logs.log
+	Dataset #14
+		Duration: 						120 minutes
+		Start Date: 					
+		Stop Date: 						
+		Total collected points count:	
+		Environment description:		OzU inovasyon merkezi, hafif hareketli, calisma yerleri
+		Environment photo:				Telegram - Senior Project Dataset Group
+		The command:
+			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 14 0 ./dataset_14_primary_node_logs.log
+		The corresponding critical log:
+			
