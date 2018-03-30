@@ -51,7 +51,7 @@ int PostgresModule::getHighestDatasetNo() //For every program execution, I'll si
 {
 	return 0;
 }
-bool PostgresModule::saveBatchScanData(LIDAR_batch_scan_data lidar_batch_scan_data, int dataset_no, bool is_abnormal)
+bool PostgresModule::saveBatchScanData(LIDAR_batch_scan_data lidar_batch_scan_data, int dataset_no, bool is_normal)
 {
    long long int batch_timestamp = lidar_batch_scan_data.timestamp_msec;
    int data_point_count = lidar_batch_scan_data.scanned_data_count;
@@ -62,10 +62,10 @@ bool PostgresModule::saveBatchScanData(LIDAR_batch_scan_data lidar_batch_scan_da
    
    for(int i=0; i<data_point_count; i++) {
       LIDAR_data_point current_point = lidar_data_point_array[i];
-      if(is_abnormal)
-         ss << "INSERT INTO "<<this->lidar_data_table_name<<" (dataset_no, lidar_no, timestamp_ms, thetha, distance, quality, is_abnormal) VALUES ("<<dataset_no<<","<<lidar_ID<<","<<batch_timestamp<<","<<current_point.thetha<<","<<current_point.distance<<","<<current_point.measurement_quality<<",true); "; //quick and dirty solution (also quite silly, sry).
+      if(is_normal)
+         ss << "INSERT INTO "<<this->lidar_data_table_name<<" (dataset_no, lidar_no, timestamp_ms, thetha, distance, quality, normal) VALUES ("<<dataset_no<<","<<lidar_ID<<","<<batch_timestamp<<","<<current_point.thetha<<","<<current_point.distance<<","<<current_point.measurement_quality<<",true); "; //quick and dirty solution (also quite silly, sry).
       else
-         ss << "INSERT INTO "<<this->lidar_data_table_name<<" (dataset_no, lidar_no, timestamp_ms, thetha, distance, quality, is_abnormal) VALUES ("<<dataset_no<<","<<lidar_ID<<","<<batch_timestamp<<","<<current_point.thetha<<","<<current_point.distance<<","<<current_point.measurement_quality<<",false); ";
+         ss << "INSERT INTO "<<this->lidar_data_table_name<<" (dataset_no, lidar_no, timestamp_ms, thetha, distance, quality, normal) VALUES ("<<dataset_no<<","<<lidar_ID<<","<<batch_timestamp<<","<<current_point.thetha<<","<<current_point.distance<<","<<current_point.measurement_quality<<",false); ";
    }
 
    const std::string tmp = ss.str();

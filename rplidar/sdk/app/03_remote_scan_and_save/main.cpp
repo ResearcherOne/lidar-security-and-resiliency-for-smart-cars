@@ -120,7 +120,7 @@ int main()
 	}
 
 	int dataset_no = 5;//(postgres_module.getHighestDatasetNo()+1);
-	bool is_abnormal = false;
+	bool is_normal = true;
 	
 	int counter = 0;
 	int total_collected_data_count = 0;
@@ -130,7 +130,7 @@ int main()
 		if(is_data_collection_phase) {
 			LIDAR_batch_scan_data lidar_batch_scan_data;
 			lidar->grabBatchScanData(&lidar_batch_scan_data, lidar_ID, util.getCurrentTimeMilliseconds());//When two lidars are present, I will need to use threads in order to simultenously fetch data from them.
-			postgres_module.saveBatchScanData(lidar_batch_scan_data, dataset_no, is_abnormal);
+			postgres_module.saveBatchScanData(lidar_batch_scan_data, dataset_no, is_normal);
 			total_collected_data_count = total_collected_data_count + lidar_batch_scan_data.scanned_data_count;
 		}
 	}

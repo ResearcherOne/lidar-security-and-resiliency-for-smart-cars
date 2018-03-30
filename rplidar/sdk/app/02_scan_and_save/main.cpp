@@ -46,7 +46,7 @@ int main()
 	}
 
 	int dataset_no = 5;//(postgres_module.getHighestDatasetNo()+1);
-	bool is_abnormal = false;
+	bool is_normal = true;
 	
 	int counter = 0;
 	int total_collected_data_count = 0;
@@ -56,7 +56,7 @@ int main()
 		LIDAR_batch_scan_data lidar_batch_scan_data;
 		lidar.grabBatchScanData(&lidar_batch_scan_data, lidar_ID, util.getCurrentTimeMilliseconds());
 		
-		postgres_module.saveBatchScanData(lidar_batch_scan_data, dataset_no, is_abnormal);
+		postgres_module.saveBatchScanData(lidar_batch_scan_data, dataset_no, is_normal);
 		counter++;
 		total_collected_data_count = total_collected_data_count + lidar_batch_scan_data.scanned_data_count;
 

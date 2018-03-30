@@ -134,12 +134,12 @@ bool isParametersValid(int argc, char* argv[]) //13 parameters
 int main(int argc, char* argv[])
 {
 	if(!isParametersValid(argc, argv)) {
-		std::cerr << "Usage: " << argv[0] << " <lidar_port> <lidar_id> <is_primary_node> <robot_base_usb_no> <db_name> <db_username> <db_password> <db_ip> <db_port> <db_table_name> <db_dataset_no> <is_abnormal_dataset> <logger_export_file_path>" << std::endl;
+		std::cerr << "Usage: " << argv[0] << " <lidar_port> <lidar_id> <is_primary_node> <robot_base_usb_no> <db_name> <db_username> <db_password> <db_ip> <db_port> <db_table_name> <db_dataset_no> <is_normal> <logger_export_file_path>" << std::endl;
 		return 0;
 	}
 
 	int dataset_no = 5;//(postgres_module.getHighestDatasetNo()+1);
-	bool is_abnormal = false;
+	bool is_normal = true;
 
 	lidar_com_port = argv[1];				//	/dev/ttyUSB4
 	lidar_ID = atoi(argv[2]);				//	(int) 0,1,2,3...
@@ -152,7 +152,7 @@ int main(int argc, char* argv[])
 	const char* db_port = argv[9];			//	"5432"
 	const char* db_table_name = argv[10];	//	"rplidar_table_v2"
 	dataset_no = atoi(argv[11]);			//	5
-	is_abnormal = atoi(argv[12]); 			//	(bool) 0 or 1
+	is_normal = atoi(argv[12]); 			//	(bool) 0 or 1
 	logger = new LoggerModule(argv[13]);			// ./logger_export.log
 
 	signal(SIGINT, ctrlc);
@@ -182,7 +182,7 @@ int main(int argc, char* argv[])
 		if(is_data_collection_phase) {
 			LIDAR_batch_scan_data lidar_batch_scan_data;
 			lidar->grabBatchScanData(&lidar_batch_scan_data, lidar_ID, util.getCurrentTimeMilliseconds());//When two lidars are present, I will need to use threads in order to simultenously fetch data from them.
-			postgres_module.saveBatchScanData(lidar_batch_scan_data, dataset_no, is_abnormal);
+			postgres_module.saveBatchScanData(lidar_batch_scan_data, dataset_no, is_normal);
 			total_collected_data_count = total_collected_data_count + lidar_batch_scan_data.scanned_data_count;
 		}
 	}
@@ -198,7 +198,7 @@ int main(int argc, char* argv[])
 				+"db_port: "+argv[9]+" "
 				+"db_table_name: "+argv[10]+" "
 				+"dataset_no: "+argv[11]+" "
-				+"is_abnormal: "+argv[12]+" "
+				+"is_normal: "+argv[12]+" "
 				+"LoggerModule: "+argv[13]+" "
 	);
 

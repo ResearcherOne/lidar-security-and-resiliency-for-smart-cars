@@ -16,6 +16,10 @@ Dataset Exports
 TO BE EXPORTED
 	LIDAR_data_2 will contain 6,8,9,10,12,13,14
 		total 11h of data
+Exporting a dataset
+	Copy (Select * From foo) To '/tmp/test.csv' With CSV DELIMITER ',';
+
+	TRASH: 7,11
 Procedure for Creating a Dataset
 	Connect to Pi3 over ethernet (while you are connected to wifi or another network connection)
 	[Optional] get previous dataset meta data and note it down to here.
@@ -146,12 +150,12 @@ DATA SETS
 			Total points collected: 9386292 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 13 is_abnormal: 0 LoggerModule: ./dataset_13_primary_node_logs.log
 	Dataset #14
 		Duration: 						120 minutes
-		Start Date: 					
-		Stop Date: 						
-		Total collected points count:	
+		Start Date: 					1521994897229
+		Stop Date: 						1522002218085
+		Total collected points count:	12306336
 		Environment description:		OzU inovasyon merkezi, hafif hareketli, calisma yerleri
 		Environment photo:				Telegram - Senior Project Dataset Group
 		The command:
 			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 14 0 ./dataset_14_primary_node_logs.log
 		The corresponding critical log:
-			
+			Total points collected: 12306336 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 14 is_abnormal: 0 LoggerModule: ./dataset_14_primary_node_logs.log
