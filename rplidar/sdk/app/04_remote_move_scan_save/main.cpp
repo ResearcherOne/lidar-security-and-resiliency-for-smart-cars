@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../02_scan_and_save/rplidar_module.hpp"
 #include "../03_remote_scan_and_save/LIDAR_data_structures.hpp"
-#include "../03_remote_scan_and_save/postgres_module.hpp"
+#include "../02_scan_and_save/postgres_module.hpp"
 #include "../02_scan_and_save/util_module.hpp"
 #include "../../../../cpp/06-writing-xbox-joystick-module/xbox_joystick.hpp"
 #include "robot_base.hpp"

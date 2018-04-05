@@ -22,7 +22,7 @@ MODULE_NAME := $(notdir $(CURDIR))
 
 include $(HOME_TREE)/mak_def.inc
 
-CXXSRC += main.cpp robot_base.cpp robot_base.hpp ../02_scan_and_save/rplidar_module.cpp ../02_scan_and_save/rplidar_module.hpp ../03_remote_scan_and_save/postgres_module.cpp ../03_remote_scan_and_save/postgres_module.hpp ../03_remote_scan_and_save/LIDAR_data_structures.cpp ../03_remote_scan_and_save/LIDAR_data_structures.hpp ../02_scan_and_save/util_module.hpp ../02_scan_and_save/util_module.cpp ../../../../cpp/06-writing-xbox-joystick-module/xbox_joystick.hpp ../../../../cpp/06-writing-xbox-joystick-module/xbox_joystick.cpp ../../../../cpp/09-logger-module/logger_module.hpp ../../../../cpp/09-logger-module/logger_module.cpp
+CXXSRC += main.cpp robot_base.cpp robot_base.hpp ../02_scan_and_save/rplidar_module.cpp ../02_scan_and_save/rplidar_module.hpp ../02_scan_and_save/postgres_module.cpp ../02_scan_and_save/postgres_module.hpp ../03_remote_scan_and_save/LIDAR_data_structures.cpp ../03_remote_scan_and_save/LIDAR_data_structures.hpp ../02_scan_and_save/util_module.hpp ../02_scan_and_save/util_module.cpp ../../../../cpp/06-writing-xbox-joystick-module/xbox_joystick.hpp ../../../../cpp/06-writing-xbox-joystick-module/xbox_joystick.cpp ../../../../cpp/09-logger-module/logger_module.hpp ../../../../cpp/09-logger-module/logger_module.cpp
 C_INCLUDES += -I$(CURDIR)/../../sdk/include
 
 EXTRA_OBJ := 
