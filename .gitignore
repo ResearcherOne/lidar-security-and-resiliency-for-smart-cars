@@ -1,5 +1,6 @@
 *.o
 rplidar/sdk/output/*
+rplidar/sdk/obj/*
 *.log
 *.out
 *.a
