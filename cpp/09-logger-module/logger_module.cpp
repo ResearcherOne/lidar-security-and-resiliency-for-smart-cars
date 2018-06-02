@@ -4,9 +4,6 @@
 #include <string>
 #include <sstream>
 #include <stdio.h>
-#include "../../rplidar/sdk/app/02_scan_and_save/util_module.hpp"
-
-UtilModule util;
 
 template <typename T>
 std::string toString(T val)
@@ -23,7 +20,7 @@ LoggerModule::LoggerModule(std::string filePath)
 
 void LoggerModule::log(std::string message)
 {
-	long long int current_millis = util.getCurrentTimeMilliseconds();
+	long long int current_millis = this->util.getCurrentTimeMilliseconds();
 	std::cout << current_millis << ": "<< message.c_str() << "\n";
 	std::string command = "sudo echo \""+toString(current_millis)+": "+message+"\" >> "+this->filePath;
 	system(command.c_str());

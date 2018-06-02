@@ -1,7 +1,7 @@
 Reference Command
-	sudo ./04_remote_move_scan_save <lidar_port> <lidar_id> <is_primary_node> <robot_base_usb_no> <db_name> <db_username> <db_password> <db_ip> <db_port> <db_table_name> <db_dataset_no> <is_abnormal_dataset> <logger_export_file_path>
+	sudo ./04_remote_move_scan_save <lidar_port> <lidar_id> <is_primary_node> <robot_base_usb_no> <db_name> <db_username> <db_password> <db_ip> <db_port> <db_table_name> <db_dataset_no> <is_normal_dataset> <logger_export_file_path>
 Test Command
-	sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 test_table 1 0 ./test_primary_node_logs.log
+	sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 test_table 1 1 ./test_primary_node_logs.log
 DB Info:
 	DB Name:
 	Tables:
@@ -159,3 +159,14 @@ DATA SETS
 			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 14 0 ./dataset_14_primary_node_logs.log
 		The corresponding critical log:
 			Total points collected: 12306336 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 14 is_abnormal: 0 LoggerModule: ./dataset_14_primary_node_logs.log
+	Dataset #15 (Abnormal)(is_abnormal->normal)
+		Duration: 						120 minutes
+		Start Date: 					1522944812858
+		Stop Date: 						1522986987201
+		Total collected points count:	72214282
+		Environment description:		OKATEM LAB, relatively dynamic environment, under attack.
+		Environment photo:				Telegram - Senior Project Dataset Group
+		The command:
+			sudo ./04_remote_move_scan_save /dev/ttyUSB0 0 1 1 test ubuntu menohavepass 127.0.0.1 5432 rplidar_table_v2 15 0 ./dataset_15_primary_node_logs.log
+		The corresponding critical log:
+			Total points collected: 72214282 lidar_com_port: /dev/ttyUSB0 lidar_ID: 0 isPrimaryNode: 1 robot_base_USB_no: 1 db_name: test db_username: ubuntu db_password: menohavepass db_ip: 127.0.0.1 db_port: 5432 db_table_name: rplidar_table_v2 dataset_no: 15 is_normal: 0 LoggerModule: ./dataset_15_primary_node_logs.log

@@ -22,7 +22,7 @@ MODULE_NAME := $(notdir $(CURDIR))
 
 include $(HOME_TREE)/mak_def.inc
 
-CXXSRC += main.cpp rplidar_module.cpp rplidar_module.hpp postgres_module.cpp postgres_module.hpp LIDAR_data_structures.cpp LIDAR_data_structures.hpp util_module.hpp util_module.cpp ../../../../cpp/06-writing-xbox-joystick-module/xbox_joystick.hpp ../../../../cpp/06-writing-xbox-joystick-module/xbox_joystick.cpp
+CXXSRC += main.cpp rplidar_module.cpp rplidar_module.hpp postgres_module.cpp postgres_module.hpp LIDAR_data_structures.cpp LIDAR_data_structures.hpp ../modules/util_module.hpp ../modules/util_module.cpp ../../../../cpp/06-writing-xbox-joystick-module/xbox_joystick.hpp ../../../../cpp/06-writing-xbox-joystick-module/xbox_joystick.cpp
 C_INCLUDES += -I$(CURDIR)/../../sdk/include
 
 EXTRA_OBJ := 

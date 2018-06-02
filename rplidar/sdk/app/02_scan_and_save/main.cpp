@@ -2,7 +2,7 @@
 #include "rplidar_module.hpp"
 #include "LIDAR_data_structures.hpp"
 #include "postgres_module.hpp"
-#include "util_module.hpp"
+#include "../modules/util_module.hpp"
 
 #include <unistd.h>
 #include <stdio.h>
