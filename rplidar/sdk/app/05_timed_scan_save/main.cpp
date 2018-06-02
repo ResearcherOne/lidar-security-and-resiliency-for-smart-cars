@@ -89,7 +89,7 @@ void toggle_data_collection() {
 
 bool isParametersValid(int argc, char* argv[]) //13 parameters
 {
-	if (argc != 13) {
+	if (argc != 14) {
         return 0;
     }
 
