@@ -39,6 +39,7 @@ int max_usb_port_count = 4;
 
 int lidar_ID = 0;
 int runningDurationInMinutes = 0;
+int programStartDelayInMinutes = 0;
 bool is_exit_button_pressed = false;
 bool is_data_collection_phase = false;
 bool is_lidar_initialized = false;
@@ -103,7 +104,7 @@ bool isRunningDurationOver(){
 int main(int argc, char* argv[])
 {
 	if(!isParametersValid(argc, argv)) {
-		std::cerr << "Usage: " << argv[0] << " <lidar_port> <lidar_id> <running_duration_in_minutes> <db_name> <db_username> <db_password> <db_ip> <db_port> <db_table_name> <db_dataset_no> <is_normal> <logger_export_file_path>" << std::endl;
+		std::cerr << "Usage: " << argv[0] << " <lidar_port> <lidar_id> <running_duration_in_minutes> <db_name> <db_username> <db_password> <db_ip> <db_port> <db_table_name> <db_dataset_no> <is_normal> <logger_export_file_path> <programStartDelayInMinutes>" << std::endl;
 		return 0;
 	}
 
@@ -121,7 +122,8 @@ int main(int argc, char* argv[])
 	const char* db_table_name = argv[9];	//	"rplidar_table_v2"
 	dataset_no = atoi(argv[10]);			//	5
 	is_normal = atoi(argv[11]); 			//	(bool) 0 or 1
-	logger = new LoggerModule(argv[12]);			// ./logger_export.log
+	logger = new LoggerModule(argv[12]);	// ./logger_export.log
+	programStartDelayInMinutes = atoi(argv[13]); 			//	(int) 1,2,3...
 
 	signal(SIGINT, ctrlc);
 
@@ -134,6 +136,8 @@ int main(int argc, char* argv[])
 		exit (EXIT_FAILURE);
 	}
 
+	logger->log( "The program is delayed for "+toString(programStartDelayInMinutes)+" minutes.");
+	sleepForMs(1000 * 60 * programStartDelayInMinutes);
 	util.setTimeFlag();
 	toggle_data_collection();
 	
@@ -159,6 +163,7 @@ int main(int argc, char* argv[])
 				+"dataset_no: "+argv[10]+" "
 				+"is_normal: "+argv[11]+" "
 				+"LoggerModule: "+argv[12]+" "
+				+"programStartDelayInMinutes: "+argv[13]+" "
 	);
 
 	logger->log("Program is finished. \n");
